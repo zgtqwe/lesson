@@ -2,19 +2,29 @@ var calculator = {
 	memory : 0 ,
 	number : 0 ,
 	result:0,
-	operator:"",
+	multiple:0.1,
+	point:0,
 	numberPressed : function(num) {
 		console.log("number pressed: "+num) ;	
-       this.number =this.number * 10 + num ;
-		calculatorUI.setDisplay(this.number) ;	
+      // this.number =this.number * 10 + num ;
+		if(this.point==0)	
+		this.number =this.number * 10 + num ;
+		else
+		{
+			this.number =this.number +this.multiple* num ;
+			this.multiple=this.multiple*0.1;
+		}
+       calculator.displayResult();
+		//calculatorUI.setDisplay(this.number) ;	
 	},
 	operatorPressed : function(operator) {
 		this.memory=calculatorUI.getDisplay();
+		this.point=0;
 	   console.log("operator pressed: "+operator) ;	
 		this.operator=operator;
 		 this.number =0 ;
-		calculatorUI.setDisplay(this.number) ;	
-
+		//calculatorUI.setDisplay(this.number) ;	
+		  calculator.displayResult();
 	},
 	equalPressed : function() {
 		console.log("equal pressed") ;
@@ -34,10 +44,15 @@ var calculator = {
 			this.result=m/n;
 		
 		this.number=this.result;
-		calculatorUI.setDisplay(this.number) ;			
+		//calculatorUI.setDisplay(this.number) ;	
+		  calculator.displayResult();
 	},
 	dotPressed : function() {
 		console.log("dot pressed") ;	
+		 this .number=this .number;
+		 this.point=1;
+		 this.multiple=0.1,
+		 calculator.displayResult();
 	
 	},
 	clearPressed : function() {
@@ -50,8 +65,14 @@ var calculator = {
 		 this.number =0 ;
 		 this.memory=0;
 		 this.result=0,
-		calculatorUI.setDisplay(this.number) ;	
-
+		 this.point=0;
+		//calculatorUI.setDisplay(this.number) ;	
+				  calculator.displayResult();
+	},
+	displayResult:function(){
+		text=(parseFloat(this.number.toPrecision(12)));
+		//text=(parseFloat(this.number));
+		calculatorUI.setDisplay(text) ;	
 	},
 };
 
